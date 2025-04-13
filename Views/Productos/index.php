@@ -10,7 +10,7 @@
     <thead>
       <tr>
         <?php
-          $columns = ['FOTO', 'CODIGO', 'DESCRIPCION', 'COMPRA', 'VENTA', 'STOCK MIN', 'STOCK', 'PROV Y CAT', 'ACCIONES'];
+          $columns = ['FOTO', 'CODIGO', 'NOMBRE', 'COMPRA', 'VENTA', 'STOCK MIN', 'STOCK', 'PROV Y CAT', 'ACCIONES'];
           foreach ($columns as $col) {
             echo "<th>{$col}</th>";
           }

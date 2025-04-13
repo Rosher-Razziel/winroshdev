@@ -30,6 +30,7 @@ class Productos extends Controller {
     foreach ($productos as &$producto) {
       $producto['IMAGEN'] = $this->getImagenHTML($producto['FOTO']);
       $producto['PROV_CAT'] = htmlspecialchars($producto['DES_PROVEEDOR']) . ' - ' . htmlspecialchars($producto['DES_CATEGORIA']);
+      $producto['PRECIO_COMPRA'] = '$' . number_format($producto['PRECIO_COMPRA'], 2);
       $producto['PRECIO_VENTA'] = '$' . number_format($producto['PRECIO_VENTA'], 2);
       $producto['ACCIONES'] = $this->getAccionesHTML($producto['ID_PRODUCTO'], $producto['ESTADO']);
     }
@@ -46,15 +47,18 @@ private function getAccionesHTML($idProducto, $estado) {
   $acciones = '<div>';
   if ($estado == 1) {
     $acciones .= sprintf(
-      '<button class="btn btn-primary mb-2" onclick="btnEditarProducto(%d);"><i class="fa-solid fa-pen-to-square"></i></button>',
+      '<button class="btn btn-primary m-1" onclick="btnEditarProducto(%d);"><i class="fa-solid fa-pen-to-square"></i></button>',
       $idProducto);
     $acciones .= sprintf(
-      '<button class="btn btn-danger mb-2" onclick="btnEliminarProducto(%d);"><i class="fa-solid fa-trash"></i></button>',
+      '<button class="btn btn-warning m-1" onclick="btnCambiarStatus(%d);"><i class="fa-solid fa-bolt"></i></button>',
       $idProducto);
+    // $acciones .= sprintf(
+        // '<button class="btn btn-danger m-1" onclick="btnEliminar(%d);"><i class="fa-solid fa-trash"></i></button>',
+        // $idProducto);
     $acciones .= '<span class="badge btn-success">Activo</span>';
   } else {
     $acciones .= sprintf(
-      '<button class="btn btn-success mb-2" onclick="btnActivarProducto(%d);"><i class="fa-solid fa-circle-check"></i></button>',
+      '<button class="btn btn-success m-1" onclick="btnActivarProducto(%d);"><i class="fa-solid fa-circle-check"></i></button>',
       $idProducto);
     $acciones .= '<span class="badge btn-danger">Inactivo</span>';
   }
@@ -116,9 +120,9 @@ private function getAccionesHTML($idProducto, $estado) {
     die();
   }
 
-  // FUNCION PARA ELIMINAR PRODUCTOS
-  public function eliminar(int $id) {
-    $data = $this->model->eliminarProducto($id);
+  // FUNCION PARA DESACTIVAR PRODUCTOS
+  public function descativar(int $id) {
+    $data = $this->model->desactivarProducto($id);
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();
   }
@@ -126,6 +130,13 @@ private function getAccionesHTML($idProducto, $estado) {
   // FUNCION PARA ACTIVAR PRODUCTOS
   public function activar(int $id) {
     $data = $this->model->activarProducto($id);
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    die();
+  }
+
+  public function eliminar(int $id){
+    //TODO: NO SE PUEDE ELIMINAR POR LAS LLAVES FORANEAS
+    $data = $this->model->eliminarProducto($id);
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();
   }

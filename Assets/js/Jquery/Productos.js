@@ -23,9 +23,9 @@ $(document).ready(function () {
       const existencias = parseFloat(aData["EXISTENCIAS"]);
       const minExistencias = parseFloat(aData["EXISTENCIA_MINIMA"]);
       if (existencias < 0) {
-        $("td", nRow).css("background-color", "#CA0000");
+        $("td", nRow).css("background-color", "#FF7F7F");
       } else if (existencias < minExistencias) {
-        $("td", nRow).css("background-color", "#FFFF00");
+        $("td", nRow).css("background-color", "#FFA07A");
       }
     },
   };
@@ -35,6 +35,7 @@ $(document).ready(function () {
     ...tableConfig,
     ajax: { url: `${base_url}Productos/listar`, dataSrc: "" },
   });
+
 });
 
 // ABRIR FORMULARIO
@@ -157,7 +158,7 @@ $("#frmProductos").on("submit", function (e) {
 
 // ABRIR FORMULARIO EDITAR PRODUCTO
 function btnEditarProducto(id) {
-  $("#my-modal-title").html("Editar Proveedor");
+  $("#my-modal-title").html("Editar Producto");
   $("#btnAccion").html("Editar");
 
   const url = base_url + "Productos/editar/" + id;
@@ -199,10 +200,10 @@ function btnEditarProducto(id) {
   });
 }
 
-// BTN PARA ELIMINAR PRODUCTO
-function btnEliminarProducto(id) {
+// BTN PARA CAMBIAR PRODUCTO
+function btnCambiarStatus(id) {
   // console.log(id);
-  const url = base_url + "Productos/eliminar/" + id;
+  const url = base_url + "Productos/descativar/" + id;
 
   Swal.fire({
     title: "Estas seguro?",
@@ -238,6 +239,51 @@ function btnEliminarProducto(id) {
             timer: 1500,
           });
         }
+      });
+    }
+  });
+}
+
+// BTN PARA ELIMINAR PRODUCTO
+function btnEliminar(id) {
+  // TODO: NO SE PUEDE ELIMINAR PRODUCTO POR LAS LLAVES FORANEAS
+  // console.log(id);
+  const url = base_url + "Productos/eliminar/" + id;
+
+  Swal.fire({
+    title: "Estas seguro?",
+    text: "El producto se eliminara del sistema.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, estoy seguro.",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.post(url, function (response) {
+        console.log(response);
+        // res = JSON.parse(response);
+        // if (res === "Ok") {
+        //   Swal.fire({
+        //     title: "Eliminado",
+        //     text: "Producto Eliminado.",
+        //     icon: "success",
+        //     showConfirmButton: false,
+        //     timer: 1500,
+        //   });
+        //   // RECARGAMOS DATOS DE DATA TABLES AL REGISTRAR CLIENTE
+        //   $("#TblProductos").DataTable().ajax.reload();
+        //   $("#ProductosInactivos").DataTable().ajax.reload();
+        // } else {
+        //   Swal.fire({
+        //     title: "Eliminado",
+        //     text: "Error al eliminar producto",
+        //     icon: "error",
+        //     showConfirmButton: false,
+        //     timer: 1500,
+        //   });
+        // }
       });
     }
   });

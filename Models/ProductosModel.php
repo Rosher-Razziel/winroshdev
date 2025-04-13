@@ -73,6 +73,16 @@ class ProductosModel extends Query{
     return $data;
   }
 
+// CAMBIAR ESTADO DEL PRODUCTO
+private function eliminarProducto(int $id) {
+  //TODO: NO SE PUEDE ELIMINAR POR LAS LLAVES FORANEA
+  $sql = "DELETE FROM producto WHERE ID_PRODUCTO = $id";
+  $datos = [$id];
+  $data = $this->select_v2($sql);
+
+  return $data === 1 ? "Ok" : "Error";
+}
+
   // CAMBIAR ESTADO DEL PRODUCTO
   private function cambiarEstadoProducto(int $id, int $estado) {
     $sql = "UPDATE producto SET ESTADO = ? WHERE ID_PRODUCTO = ?";
@@ -83,7 +93,7 @@ class ProductosModel extends Query{
   }
 
   // ELIMINAR PRODUCTO
-  public function eliminarProducto(int $id) {
+  public function desactivarProducto(int $id) {
     return $this->cambiarEstadoProducto($id, 0);
   }
 
