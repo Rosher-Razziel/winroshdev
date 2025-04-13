@@ -40,7 +40,7 @@ class ProductosModel extends Query{
 
     $fecha = date('Y-m-d');
 
-    $verificar = "SELECT * FROM producto WHERE COD_BARRAS = '$this->cod_barras'";
+    $verificar = "SELECT * FROM producto WHERE COD_BARRAS = '$cod_barras'";
     $existe = $this->select($verificar);
 
     if (empty($existe)) {
