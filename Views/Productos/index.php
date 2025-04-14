@@ -1,6 +1,6 @@
 <?php include("Views/Templates/header.php"); ?>
 <ol class="breadcrumb mb-4">
-  <li class="breadcrumb-item active">Productos</li>
+  <li class="breadcrumb-item active">Productos test new rama</li>
 </ol>
 
 <button class="btn btn-success mb-2 " type="button" onclick="frmProducto();"><i class="fa-solid fa-plus"></i></button>
